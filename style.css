@@ -1,0 +1,249 @@
+body {
+    font-family: 'Georgia', serif;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    perspective: 1000px; 
+    overflow-x: hidden; /* Prevents horizontal scrollbar from appearing */
+    
+    background-image: url('page_bg.jpg'); 
+    
+    /* MODIFIED: Setting a large, fixed size ensures it moves */
+    background-size: 2000px auto; /* Make the image 1500px wide (or more) */
+    
+    /* MODIFIED: Shift the image content 100px left from the center */
+    background-position: calc(5% - 80px) center; 
+    
+    background-repeat: no-repeat;    
+    background-attachment: fixed;    
+    
+    background-color: #ede7d6; 
+}
+
+/* --- GIFT BOX CONTAINER (Overall Wrapper) --- */
+/* --- GIFT BOX CONTAINER (Overall Wrapper) --- */
+.gift-box-container {
+    position: relative;
+    width: 380px; 
+    height: 280px; 
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 1s ease-in-out; 
+    
+    /* MODIFIED: Add a left margin to push the box right */
+    margin: 0 0 0 650px; /* Top Right Bottom Left (200px moves it right) */
+}
+
+/* Box Base */
+.box-base {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    /* Patterned background code (unchanged) */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="elephant-pattern" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M12.5 0 L25 12.5 L12.5 25 L0 12.5 Z" fill="#b03a3a"/><path d="M12.5 0 L25 12.5 L12.5 25 L0 12.5 Z" fill-opacity="0.3"/><path d="M7 12a5 5 0 1 0 10 0a5 5 0 1 0 -10 0z" fill="#f0e0c0"/><path d="M12.5 12.5 L15 10 L12.5 5 L10 10 L12.5 12.5 Z" fill="#e0c0a0"/></pattern></defs><rect width="100%" height="100%" fill="#a02a2a"/><rect width="100%" height="100%" fill="url(%23elephant-pattern)"/></svg>') repeat;
+    background-size: 50px 50px; 
+    background-color: #a02a2a; 
+    border: 3px solid #f0e0c0; 
+    border-radius: 8px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+/* Box Lid (and Ribbon/Tag styles - unchanged for brevity, see previous response) */
+.box-lid {
+    position: absolute; top: 0; left: -5px; width: calc(100% + 10px); height: 100%; 
+    
+    /* ---------------------------------- */
+    /* NEW COVER PHOTO STYLES */
+    /* ---------------------------------- */
+    background-image: url('box_cover.jpg'); /* Use your image file name here */
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-color: #a02a2a; /* Fallback color */
+    
+    /* ---------------------------------- */
+    border: 3px solid #f0e0c0; 
+    border-radius: 8px; 
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); 
+    z-index: 20;
+    transition: transform 1s ease-in-out, opacity 0.8s ease-out; 
+    transform-origin: center bottom; 
+}
+.ribbon-horizontal { position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%; height: 50px; background: #e6b800; border-top: 2px solid #f2e2a0; border-bottom: 2px solid #c89b00; transition: transform 0.6s ease-out, opacity 0.6s ease-out; z-index: 25; }
+.ribbon-vertical { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 100%; background: #e6b800; border-left: 2px solid #f2e2a0; border-right: 2px solid #c89b00; transition: transform 0.6s ease-out, opacity 0.6s ease-out; z-index: 26; }
+/* --- LOVE SHAPE FOR "CLICK HERE" --- */
+.ribbon-center-tag {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* Rotate to form the heart base */
+    transform: translate(-50%, -50%) rotate(-45deg); 
+    width: 90px;  
+    height: 90px; 
+    background-color:#f51b2f; /* PINK Heart color */
+    border-radius: 0; /* Start as a square */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out, background-color 0.3s ease-in-out;
+    z-index: 27;
+    color: #fff; 
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Pseudo-elements for the rounded top parts of the heart */
+.ribbon-center-tag::before,
+.ribbon-center-tag::after {
+    content: '';
+    position: absolute;
+    width: 90px;
+    height: 90px; 
+    background-color:#f51b2f; /* PINK Heart color */
+    border-radius: 50%; /* Make them circles */
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out, background-color 0.3s ease-in-out;
+}
+
+.ribbon-center-tag::before {
+    top: -45px; /* Position above the square */
+    left: 0;
+}
+
+.ribbon-center-tag::after {
+    left: 45px; /* Position to the right of the square */
+    top: 0;
+}
+
+/* Style for the text inside the heart, counter-rotate it to be readable */
+.ribbon-center-tag p {
+    margin: 0;
+    transform: rotate(45deg); /* Counter-rotate the text */
+    color: #fff; /* White text on pink background */
+    font-size: 1.1em;
+    z-index: 28; 
+}
+
+
+/* --- CARD ANIMATION STATES (Initial State) --- */
+.wedding-card {
+    position: absolute;
+    top: 60%; 
+    left: 50%;
+    transform: translate(-50%, 0) scale(0.1); 
+    width: 300px;
+    max-width: 90%;
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.3s; 
+    z-index: 5; 
+}
+
+
+/* ---------------------------------------------------- */
+/* --- CLASS ADDED BY JAVASCRIPT ON CLICK (.open) --- */
+/* ---------------------------------------------------- */
+
+/* 1. Box moves down slightly */
+.gift-box-container.open {
+    /* Moves the box down by the height of the card, effectively shifting the whole group down. */
+    transform: translateY(200px); 
+}
+
+/* 2. Card appears in a new position (above the box) */
+.gift-box-container.open .wedding-card {
+    /* Uses RELATIVE position, so it moves with the container, but it's positioned to sit above the box's original spot. */
+    position: absolute; 
+    top: -400px; /* Moves the card up out of the box */
+    left: 50%; 
+    transform: translate(-50%, 0) scale(1); /* Full size, centered horizontally */
+    opacity: 1;
+    z-index: 40; 
+}
+
+/* 3. Ribbon disappears/pulls away (unchanged) */
+.gift-box-container.open .ribbon-horizontal {
+    transform: translateY(-50%) scaleX(0); 
+    opacity: 0;
+}
+.gift-box-container.open .ribbon-vertical {
+    transform: translateX(-50%) translateY(150px); 
+    opacity: 0;
+}
+/* 4. Heart disappears/moves away */
+.gift-box-container.open .ribbon-center-tag {
+    /* Move down, shrink, reset rotation */
+    transform: translate(-50%, 100px) scale(0.5) rotate(0deg); 
+    opacity: 0;
+}
+.gift-box-container.open .ribbon-center-tag::before,
+.gift-box-container.open .ribbon-center-tag::after {
+    opacity: 0;
+}
+}
+
+/* 4. Lid is completely hidden */
+.gift-box-container.open .box-lid {
+    opacity: 0;
+}
+
+
+/* --- CARD DESIGN STYLES --- */
+/* (Unchanged for brevity, see previous response) */
+.card-border { border: 5px solid #e6b800; padding: 8px; background-color: #a02a2a; border-radius: 5px; }
+.card-content { 
+    /* 1. Set the background color to be the fallback if the image fails */
+    background-color: #ecfcd4; 
+    
+    /* 2. Add the background image property, replace 'card_bg.jpg' with your filename */
+    background-image: url('card_bg.jpg'); 
+    
+    /* 3. Ensure the image covers the whole area without stretching */
+    background-size:cover; 
+ 
+    
+    /* 4. Keep the image centered */
+    background-position:right;
+    
+    /* 5. Prevent the image from tiling */
+    background-repeat: no-repeat;
+    
+    /* 6. Text styling and padding remains */
+    padding: 30px 20px; 
+    text-align: center; 
+    color: #3e3e3e; 
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.1); 
+}
+.invocation { font-size: 0.9em; margin-bottom: 10px; font-style: italic; color: #797979; }
+h1 { font-family: 'Times New Roman', serif; font-size: 1.4em; margin-bottom: 25px; letter-spacing: 2px; text-transform: uppercase; color: #a02a2a; } 
+.couple-names { margin-bottom: 30px; line-height: 2.8; }
+.name { 
+    /* Using the new Google Font */
+    font-family: 'Quicksand', cursive; 
+    font-size: 3em; /* Make it much larger to show the detail! */
+    line-height: 0.9; /* Pull the names closer together */
+    font-weight: normal; 
+    display: block; 
+    color: #d90202; 
+    margin: 0; 
+}
+
+/* Also adjust the 'Weds' text to fit the new font size */
+.ampersand { 
+    font-family: Arial, sans-serif; 
+    font-size: 1.2em;
+    font-weight: bold; /* Make it pop */
+    color: #2a8ca0; 
+    display: block; 
+    margin: -5px 0 0 0; /* Adjust margin to sit correctly */
+}
+.details { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; border-top: 1px dashed #ccc; border-bottom: 1px dashed #ccc; padding: 15px 0; }
+.label { font-weight: bold; font-size: 0.9em; color: #a02a2a; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 1px; } 
+.value { font-size: 1em; color: #3e3e3e; }
+.r-s-v-p { font-size: 0.9em; font-style: italic;
