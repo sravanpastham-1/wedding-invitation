@@ -247,3 +247,44 @@ h1 { font-family: 'Times New Roman', serif; font-size: 1.4em; margin-bottom: 25p
 .label { font-weight: bold; font-size: 0.9em; color: #a02a2a; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 1px; } 
 .value { font-size: 1em; color: #3e3e3e; }
 .r-s-v-p { font-size: 0.9em; font-style: italic;
+          /* ============================================== */
+/* --- MEDIA QUERIES FOR MOBILE DEVICES (<600px) --- */
+/* ============================================== */
+
+@media (max-width: 600px) {
+    
+    /* --- 1. BODY/BACKGROUND FIX --- */
+    body {
+        /* Overrides: background-size: 2000px auto; */
+        background-size: cover; 
+        
+        /* Overrides: background-position: calc(5% - 80px) center; */
+        background-position: center center; 
+        
+        /* Ensures no unnecessary horizontal scrollbar on small screens */
+        overflow-x: hidden; 
+    }
+
+    /* --- 2. GIFT BOX POSITION FIX --- */
+    .gift-box-container {
+        /* Overrides: margin: 0 0 0 650px; */
+        /* Auto margin and the body's 'display: flex' will center the box */
+        margin: 0; 
+        
+        /* Make the box size relative to the viewport for responsiveness */
+        width: 90vw; 
+        height: 70vw; 
+    }
+    
+    /* 3. Adjust the card position on mobile */
+    .gift-box-container.open .wedding-card {
+        /* Move the card less far up, relative to the smaller phone screen */
+        top: -250px; /* Reduced from -400px */
+    }
+
+    /* 4. Optional: Shrink text/elements if needed on tiny screens */
+    .name {
+        font-size: 2em; /* Reduced from 3em */
+    }
+    
+}
